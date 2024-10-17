@@ -461,16 +461,19 @@ int main(int argc, char **argv)
 		/* If still zero, that mean no port info provided */
 		server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT); /* use default port */
 	 }
+	printf("start");
 	ret = start_rdma_server(&server_sockaddr);
 	if (ret) {
 		rdma_error("RDMA server failed to start cleanly, ret = %d \n", ret);
 		return ret;
 	}
+	printf("setup");
 	ret = setup_client_resources();
 	if (ret) { 
 		rdma_error("Failed to setup client resources, ret = %d \n", ret);
 		return ret;
 	}
+	printf("accept");
 	ret = accept_client_connection();
 	if (ret) {
 		rdma_error("Failed to handle client cleanly, ret = %d \n", ret);
