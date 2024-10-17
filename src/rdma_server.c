@@ -242,6 +242,7 @@ static int accept_client_connection()
        /* This tell how many outstanding requests we expect other side to handle */
        conn_param.responder_resources = 3; /* For this exercise, we put a small number */
        ret = rdma_accept(cm_client_id, &conn_param);
+	   printf("prepare to accept");
        if (ret) {
 	       rdma_error("Failed to accept the connection, errno: %d \n", -errno);
 	       return -errno;
