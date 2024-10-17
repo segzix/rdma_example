@@ -96,7 +96,7 @@ static int setup_client_resources()
 		rdma_error("Failed to request notifications on CQ errno: %d \n",
 				-errno);
 		return -errno;
-	}
+	} 
 	/* Now the last step, set up the queue pair (send, recv) queues and their capacity.
 	 * The capacity here is define statically but this can be probed from the 
 	 * device. We just use a small number as defined in rdma_common.h */
