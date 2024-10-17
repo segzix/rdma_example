@@ -437,6 +437,7 @@ int main(int argc, char **argv)
 	bzero(&server_sockaddr, sizeof server_sockaddr);
 	server_sockaddr.sin_family = AF_INET; /* standard IP NET address */
 	server_sockaddr.sin_addr.s_addr = htonl(INADDR_ANY); /* passed address */
+	printf("addr: %x", server_sockaddr.sin_addr.s_addr);
 	/* Parse Command Line Arguments, not the most reliable code */
 	while ((option = getopt(argc, argv, "a:p:")) != -1) {
 		switch (option) {
@@ -461,19 +462,19 @@ int main(int argc, char **argv)
 		/* If still zero, that mean no port info provided */
 		server_sockaddr.sin_port = htons(DEFAULT_RDMA_PORT); /* use default port */
 	 }
-	//printf("start");
+	printf("start");
 	ret = start_rdma_server(&server_sockaddr);
 	if (ret) {
 		rdma_error("RDMA server failed to start cleanly, ret = %d \n", ret);
 		return ret;
 	}
-	//printf("setup");
+	printf("setup");
 	ret = setup_client_resources();
 	if (ret) { 
 		rdma_error("Failed to setup client resources, ret = %d \n", ret);
 		return ret;
 	}
-	//printf("accept");
+	printf("accept");
 	ret = accept_client_connection();
 	if (ret) {
 		rdma_error("Failed to handle client cleanly, ret = %d \n", ret);
