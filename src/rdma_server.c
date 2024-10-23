@@ -436,7 +436,7 @@ int main(int argc, char **argv)
 	struct sockaddr_in server_sockaddr;
 	bzero(&server_sockaddr, sizeof server_sockaddr);
 	server_sockaddr.sin_family = AF_INET; /* standard IP NET address */
-	server_sockaddr.sin_addr.s_addr = htonl(INADDR_LOOPBACK); /* passed address */
+	server_sockaddr.sin_addr.s_addr = htonl(INADDR_ANY); /* passed address */
 	printf("addr: %x", server_sockaddr.sin_addr.s_addr);
 	/* Parse Command Line Arguments, not the most reliable code */
 	while ((option = getopt(argc, argv, "a:p:")) != -1) {
