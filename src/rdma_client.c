@@ -196,18 +196,23 @@ void init_send_wr(enum SENDOP op, struct ibv_mr *mr) {
     case SEND:
         client_send_wr.opcode = IBV_WR_SEND;
         client_send_wr.send_flags = IBV_SEND_SIGNALED;
+		break;
     case WRITE:
         client_send_wr.opcode = IBV_WR_RDMA_WRITE;
         client_send_wr.send_flags = IBV_SEND_SIGNALED;
         /* we have to tell server side info for RDMA */
         client_send_wr.wr.rdma.rkey = server_metadata_attr.stag.remote_stag;
         client_send_wr.wr.rdma.remote_addr = server_metadata_attr.address;
+		break;
     case READ:
         client_send_wr.opcode = IBV_WR_RDMA_READ;
         client_send_wr.send_flags = IBV_SEND_SIGNALED;
         /* we have to tell server side info for RDMA */
         client_send_wr.wr.rdma.rkey = server_metadata_attr.stag.remote_stag;
         client_send_wr.wr.rdma.remote_addr = server_metadata_attr.address;
+		break;
+	default:
+		break;
     }
 }
 
