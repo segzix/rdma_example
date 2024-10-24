@@ -299,7 +299,8 @@ static int accept_client_connection() {
      */
     debug("Going to wait for : RDMA_CM_EVENT_ESTABLISHED event \n");
     ret = process_rdma_cm_event(cm_event_channel, RDMA_CM_EVENT_ESTABLISHED,
-                                &cm_event);
+                                
+								&cm_event);
     if (ret) {
         rdma_error("Failed to get the cm event, errnp: %d \n", -errno);
         return -errno;
@@ -372,23 +373,12 @@ static int send_server_metadata_to_client() {
         /* we assume that this is due to out of memory error */
         return -ENOMEM;
     }
+
     /* We need to transmit this buffer. So we create a send request.
      * A send request consists of multiple SGE elements. In our case, we only
      * have one
      */
-    // server_send_sge.addr = (uint64_t)&server_metadata_attr;
-    // server_send_sge.length = sizeof(server_metadata_attr);
-    // server_send_sge.lkey = server_metadata_mr->lkey;
-    // /* now we link this sge to the send request */
-    // bzero(&server_send_wr, sizeof(server_send_wr));
-    // server_send_wr.sg_list = &server_send_sge;
-    // server_send_wr.num_sge = 1;          // only 1 SGE element in the array
-    // server_send_wr.opcode = IBV_WR_SEND; // This is a send request
-    // server_send_wr.send_flags =
-    //     IBV_SEND_SIGNALED; // We want to get notification
-    // /* This is a fast data path operation. Posting an I/O request */
-
-	init_send_wr(SEND, server_metadata_mr);
+    init_send_wr(SEND, server_metadata_mr);
     ret = ibv_post_send(
         client_qp /* which QP */,
         &server_send_wr /* Send request that we prepared before */, &bad_server_send_wr /* In case of error, this will contain failed requests */);
