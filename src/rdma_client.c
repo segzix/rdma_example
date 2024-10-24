@@ -177,7 +177,7 @@ void init_recv_wr() {
     server_recv_sge.lkey = (uint32_t)server_metadata_mr->lkey;
 
     /* now we link to the send work request */
-    bzero(&client_send_wr, sizeof(client_send_wr));
+    bzero(&server_recv_wr, sizeof(server_recv_wr));
     server_recv_wr.sg_list = &server_recv_sge;
     server_recv_wr.num_sge = 1;
 }
